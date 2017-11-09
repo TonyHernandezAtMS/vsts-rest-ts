@@ -1,11 +1,11 @@
 export const FieldNames = {
-    Tags : "System.Tags",
-    Title : "System.Title",
-    History: "System.History",
-    ID: "System.Id"
-}
+    Tags : 'System.Tags',
+    Title : 'System.Title',
+    History: 'System.History',
+    ID: 'System.Id',
+};
 
-export type FieldNamesType = "System.Tags" | "System.Title" | "System.History" | "System.Id";
+export type FieldNamesType = 'System.Tags' | 'System.Title' | 'System.History' | 'System.Id';
 
 export interface ILogger {
     info(message: string): void;
@@ -14,108 +14,106 @@ export interface ILogger {
     verbose(message: string): void;
 }
 
-export interface OperationArgumentMember {
+export interface IOperationArgumentMember {
     [fieldName: string]: string | number | number[];
 }
-export interface OperationArguments {
+export interface IOperationArguments {
     data?: any;
-    path?: OperationArgumentMember;
-    parameters?: OperationArgumentMember
-    headers?: OperationArgumentMember
+    path?: IOperationArgumentMember;
+    parameters?: IOperationArgumentMember;
+    headers?: IOperationArgumentMember;
 }
-export interface Operation {
-    (URL: string, args: any, callback: any): void;
-}
+export type Operation = (URL: string, args: any, callback: any) => void;
 
 export interface IVSTSConfig {
-    endpoint: string,
-    project: string,
-    username: string,
-    password: string
+    endpoint: string;
+    project: string;
+    username: string;
+    password: string;
 }
 
-export interface VSTSItem {
+export interface IVSTSItem {
     id: number;
     url?: string;
     name?: string;
 }
 
-export interface TestCase extends VSTSItem {
+export interface ITestCase extends IVSTSItem {
 
 }
 
-export interface Build extends VSTSItem {
+export interface IBuild extends IVSTSItem {
 
 }
 
-export interface TestResult extends VSTSItem {
-    configuration: VSTSItem;
-    project: VSTSItem;
+export interface ITestResult extends IVSTSItem {
+    configuration: IVSTSItem;
+    project: IVSTSItem;
     startedDate: string;
     completedDate: string;
     outcome: string;
-    owner: Person;
+    owner: IPerson;
     revision: number;
-    runBy: Person;
+    runBy: IPerson;
     state: string;
-    testCase: VSTSItem;
-    testRun: VSTSItem;
+    testCase: IVSTSItem;
+    testRun: IVSTSItem;
     lastUpdatedDate: string;
-    lastUpdatedBy: Person;
+    lastUpdatedBy: IPerson;
     priority: number;
     computerName: string;
     createdDate: string;
     testCaseTitle: string;
     testCaseReferenceId: string;
-    associatedBugs?: VSTSItem[];
+    associatedBugs?: IVSTSItem[];
 }
-export interface TestSuite {
-    plan: TestPlan;
+export interface ITestSuite {
+    plan: ITestPlan;
     id: number;
 }
-export interface Area {
+export interface IArea {
     id: number;
     name: string;
 }
-export interface Person {
+export interface IPerson {
     displayName: string;
     id: string;
     imageUrl?: string;
     uniqueName?: string;
-    url?: string
+    url?: string;
 }
-export interface Project {
+export interface IProject {
     id: string;
     name: string;
     url: string;
 }
-export interface TestPlan {
+export interface ITestPlan {
     id: number;
-    area: Area;
+    area: IArea;
     clientUrl: string;
     endDate: Date;
     iteration: string;
     name: string;
     manualTestSettings: object;
-    owner: Person
-    project: Project;
+    owner: IPerson;
+    project: IProject;
     revision: number;
-    rootSuite: Object
+    rootSuite: object;
     startDate: Date;
     state: string;
-    updatedBy: Person;
+    updatedBy: IPerson;
     updatedDate: Date;
     url: string;
 }
 
-export interface TestRun extends VSTSItem {
+export interface ITestRun extends IVSTSItem {
     isAutomated: boolean;
     iteration: string;
-    owner: Person;
-    project: VSTSItem;
+    owner: IPerson;
+    project: IVSTSItem;
     startedDate: string;
     completedDate: string;
-    plan: VSTSItem;
+    plan: IVSTSItem;
     totalTests: number;
     incompleteTests: number;
     notApplicableTests: number;
@@ -124,100 +122,100 @@ export interface TestRun extends VSTSItem {
     revision: number;
     webAccessUrl: string;
 }
-export interface Requirement {
+export interface IRequirement {
     Description: string;
-    testCases: TestCase[];
+    testCases: ITestCase[];
     category: string;
 }
-export interface Field {
+export interface IField {
     name: string;
     referenceName: FieldNamesType;
     url: string;
 }
 
-export interface WIQLResultBase {
+export interface IWIQLResultBase {
     asOf: Date;
-    columns: Field[];
+    columns: IField[];
     queryResultType: string;
     queryType: string;
-    sortColumns?: SortColumn[];
+    sortColumns?: ISortColumn[];
 }
 
-export interface WIQLResultFlat extends WIQLResultBase {
-    workItems: VSTSItem[];
+export interface IWIQLResultFlat extends IWIQLResultBase {
+    workItems: IVSTSItem[];
 }
 
-export interface WIQLResultOneHop extends WIQLResultBase {
-    workItemRelations: {target: VSTSItem, rel?:string, source?:VSTSItem}[];
+export interface IWIQLResultOneHop extends IWIQLResultBase {
+    workItemRelations: Array<{target: IVSTSItem, rel?: string, source?: IVSTSItem}>;
 }
 
-export interface SortColumn {
+export interface ISortColumn {
     descending: boolean;
-    field: Field;
+    field: IField;
 }
-export interface WorkItemFields {
+export interface IWorkItemFields {
     [fieldName: string]: string | number;
 }
-export interface hrefLink {
-    href: string
+export interface IhrefLink {
+    href: string;
 }
 
-export interface WorkItemRelationship {
-    rel: string,
-    url: string,
-    attributes: {[key:string]:any}
+export interface IWorkItemRelationship {
+    rel: string;
+    url: string;
+    attributes: {[key: string]: any};
 }
 
-export interface ActualWorkItem extends VSTSItem {
+export interface IActualWorkItem extends IVSTSItem {
     rev?: number;
-    fields: WorkItemFields;
+    fields: IWorkItemFields;
     _links?: {
-        fields: hrefLink,
-        html: hrefLink,
-        self: hrefLink,
-        workItemHistory: hrefLink,
-        workItemRevisions: hrefLink,
-        workItemType: hrefLink,
-        workItemUpdates: hrefLink
-    }
-    relations?: WorkItemRelationship[]
+        fields: IhrefLink,
+        html: IhrefLink,
+        self: IhrefLink,
+        workItemHistory: IhrefLink,
+        workItemRevisions: IhrefLink,
+        workItemType: IhrefLink,
+        workItemUpdates: IhrefLink,
+    };
+    relations?: IWorkItemRelationship[];
 }
 
-export interface NewWorkItem {
+export interface INewWorkItem {
     workItemType: string;
-    fields: WorkItemFields;
-    relations?: WorkItemRelationship[];
+    fields: IWorkItemFields;
+    relations?: IWorkItemRelationship[];
 }
 
-export interface WorkItemProperty {
+export interface IWorkItemProperty {
     key: string;
     value: string;
 }
-export interface WorkItemProperties {
-    workItem: WorkItemProperty;
+export interface IWorkItemProperties {
+    workItem: IWorkItemProperty;
 }
-export interface LastResultDetails {
+export interface ILastResultDetails {
     duration: number;
     dateCompleted: string;
-    runBy: Person
+    runBy: IPerson;
 }
-export interface TestPoint extends VSTSItem {
-    assignedTo: Person;
-    configuration: VSTSItem;
-    lastTestRun: VSTSItem;
-    lastResult: VSTSItem;
+export interface ITestPoint extends IVSTSItem {
+    assignedTo: IPerson;
+    configuration: IVSTSItem;
+    lastTestRun: IVSTSItem;
+    lastResult: IVSTSItem;
     outcome: string;
     state: string;
-    testCase: VSTSItem;
-    workItemProperties: WorkItemProperties[];
-    suite: VSTSItem;
-    testPlan: VSTSItem;
+    testCase: IVSTSItem;
+    workItemProperties: IWorkItemProperties[];
+    suite: IVSTSItem;
+    testPlan: IVSTSItem;
     automated: boolean;
-    lastResultDetails: LastResultDetails;
+    lastResultDetails: ILastResultDetails;
     revision: number;
     failureType?: string;
     lastResolutionStateId?: number;
     lastUpdatedDate: string;
     lastResultState: string;
-    lastUpdatedBy: Person;
+    lastUpdatedBy: IPerson;
 }

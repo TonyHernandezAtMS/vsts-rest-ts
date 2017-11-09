@@ -15,7 +15,6 @@
     "typings": "./dist/vsts-rest-ts.d.ts",
     "main": "./dist/vsts-rest-ts.js",
     "scripts": {
-        "start": "tsc -w",
         "clean": "rimraf dist",
         "build": "tsc",
         "lint": "tslint ./src/**/*.ts ./test/**/*.ts",
