@@ -1,6 +1,6 @@
 {
     "name": "vsts-rest-ts",
-    "version": "1.0.0",
+    "version": "0.0.1",
     "description": "Typescript library for working with VSTS/TFS REST API",
     "license": "MIT",
     "author": "Tony Hernandez <9831944+TonyHernandezAtMS@users.noreply.github.com>",
