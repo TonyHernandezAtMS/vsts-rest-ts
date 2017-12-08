@@ -1,3 +1,5 @@
+import { Methods } from "./enums";
+
 export const FieldNames = {
     Tags : 'System.Tags',
     Title : 'System.Title',
@@ -6,6 +8,14 @@ export const FieldNames = {
 };
 
 export type FieldNamesType = 'System.Tags' | 'System.Title' | 'System.History' | 'System.Id';
+
+export interface IAsyncRestClientFactory {
+    CreateClient(): IAsyncRestClient;
+}
+
+export interface IAsyncRestClient {
+    ExecuteOperation<T>(method: Methods, URL: string, args: IOperationArguments): Promise<T>;
+}
 
 export interface ILogger {
     info(message: string): void;
@@ -28,8 +38,6 @@ export type Operation = (URL: string, args: any, callback: any) => void;
 export interface IVSTSConfig {
     endpoint: string;
     project: string;
-    username: string;
-    password: string;
 }
 
 export interface IVSTSItem {

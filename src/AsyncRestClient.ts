@@ -1,15 +1,8 @@
 import * as noderestclient from 'node-rest-client';
-import { ILogger, IOperationArguments, Operation } from './interfaces/interfaces';
+import { Methods } from './interfaces/enums';
+import { IAsyncRestClient, ILogger, IOperationArguments, Operation } from './interfaces/interfaces';
 
-export const enum Methods {
-    GET,
-    POST,
-    UPDATE,
-    DELETE,
-    PATCH,
-}
-
-export default class VSTSOperation {
+export default class AsyncRestClient implements IAsyncRestClient {
     private static throttled = false;
     private client: noderestclient.Client;
 
@@ -85,14 +78,14 @@ export default class VSTSOperation {
                         fulfill(data);
                     }
                 } else if (response.statusCode === 503) {
-                    VSTSOperation.throttled = true;
+                    AsyncRestClient.throttled = true;
 
                     this.log.info(`Retrying: ${response.req.path}`);
 
                     this.ExecuteOperation<T>(method, URL, args)
                         .then((x: T) => {
                             this.log.info('SUCCESS: retry');
-                            VSTSOperation.throttled = false;
+                            AsyncRestClient.throttled = false;
                             fulfill(x);
                         })
                         .catch((reason: any) => {
